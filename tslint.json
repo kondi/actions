@@ -1,0 +1,98 @@
+{
+  "rulesDirectory": [
+    "tslint-microsoft-contrib",
+    "tslint-misc-rules",
+    "tslint-consistent-codestyle",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "arrow-return-shorthand": true,
+    "ban-comma-operator": true,
+    "callable-types": true,
+    "class-name": true,
+    "class-method-newlines": true,
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "curly": true,
+    "deprecation": true,
+    "forin": true,
+    "interface-over-type-literal": true,
+    "label-position": true,
+    "member-access": false,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
+      }
+    ],
+    "no-accessor-recursion": true,
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-console": [
+      true,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-duplicate-switch-case": true,
+    "no-duplicate-super": true,
+    "no-empty": false,
+    "no-empty-interface": true,
+    "no-eval": true,
+    "no-shadowed-variable": true,
+    "no-static-this": true,
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
+    "no-misused-new": true,
+    "no-non-null-assertion": true,
+    "no-return-await": true,
+    "no-string-literal": false,
+    "no-duplicate-imports": true,
+    "no-submodule-imports": [
+      true
+    ],
+    "no-suspicious-comment": true,
+    "no-switch-case-fall-through": true,
+    "no-this-assignment": [
+      true,
+      {
+        "allow-destructuring": true
+      }
+    ],
+    "no-unnecessary-initializer": true,
+    "no-unused-expression": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
+    "object-literal-sort-keys": false,
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true
+      }
+    ],
+    "prefer-const": true,
+    "prefer-readonly": true,
+    "prefer-while": true,
+    "radix": true,
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "unified-signatures": true,
+    "variable-name": false
+  }
+}

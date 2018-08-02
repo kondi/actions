@@ -1,0 +1,30 @@
+{
+  "main": "lib/index",
+  "typings": "lib/index",
+  "name": "@kondi/actions",
+  "version": "0.0.1",
+  "description": "Define @ngrx actions and reducers without boilerplate",
+  "license": "MIT",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kondi/actions.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project .",
+    "test": "npm run lint && npm run format:check",
+    "format:check": "prettier --list-different \"src/**/*.ts\"",
+    "format:apply": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tslint-microsoft-contrib": "^5.1.0",
+    "prettier": "^1.14.0",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.14.0",
+    "tslint-consistent-codestyle": "^1.13.3",
+    "tslint-misc-rules": "^3.4.0",
+    "typescript": "~2.9.0"
+  }
+}
