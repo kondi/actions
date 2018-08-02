@@ -10,7 +10,7 @@ export interface ScopedAction<P, MT extends PropertyKey, S extends string> exten
 }
 
 export type ActionFactory<S extends string, MT extends keyof PS, PS> = {} extends PS[MT]
-  ? () => ScopedAction<never, MT, S>
+  ? (payload?: PS[MT]) => ScopedAction<PS[MT], MT, S>
   : <P extends PS[MT]>(payload: P) => ScopedAction<P, MT, S>;
 
 export type ActionFactories<S extends string, PS> = { [MT in keyof PS]: ActionFactory<S, MT, PS> };

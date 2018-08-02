@@ -2,7 +2,7 @@
   "main": "lib/index",
   "typings": "lib/index",
   "name": "@kondi/actions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Define @ngrx actions and reducers without boilerplate",
   "license": "MIT",
   "keywords": [],
