@@ -15,7 +15,7 @@ export type ActionFactory<S extends string, MT extends keyof PS, PS> = {} extend
 
 export type ActionFactories<S extends string, PS> = { [MT in keyof PS]: ActionFactory<S, MT, PS> };
 
-type ActionPredicate<S extends string, MT extends keyof PS, PS> = (
+export type ActionPredicate<S extends string, MT extends keyof PS, PS> = (
   action: NakedAction,
 ) => action is ScopedAction<PS[MT], MT, S>;
 
