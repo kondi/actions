@@ -16,10 +16,7 @@ export type ActionsUnion<
   A1 extends DefinedActions<any, any>,
   A2 extends DefinedActions<any, any>
 > = {
-  /**
-   * @deprecated create is not allowed in actions union
-   */
-  create: never;
+  create: Record<KeysOf<A1> & KeysOf<A2>, never>;
 } & DefinedActions<ScopeOf<A1> | ScopeOf<A2>, PayloadsUnion<PayloadsOf<A1>, PayloadsOf<A2>>>;
 
 function actionsUnionPair<A1 extends DefinedActions<any, any>, A2 extends DefinedActions<any, any>>(
@@ -48,10 +45,18 @@ function actionsUnionPair<A1 extends DefinedActions<any, any>, A2 extends Define
     is[key] = predicate as ActionPredicate<S, K, PS>;
   });
 
+  const create = {} as ReturnType['create'];
+  keys.forEach(key => {
+    if (key in actions1.create) {
+      create[key] = actions1.create[key] as ActionFactory<S, K, PS>;
+    }
+    if (key in actions2.create) {
+      create[key] = actions2.create[key] as ActionFactory<S, K, PS>;
+    }
+  });
+
   return {
-    get create(): never {
-      throw new Error('Do not use create of actions union');
-    },
+    create,
     is,
     createReducer: buildCreateReducer<S, PS>(is),
     get ȋnternal(): never {
