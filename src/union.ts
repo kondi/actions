@@ -1,5 +1,13 @@
 import { buildCreateReducer } from './create-reducer';
-import { ActionPredicate, DefinedActions, NakedAction } from './types';
+import {
+  ActionFactory,
+  ActionPredicate,
+  DefinedActions,
+  KeysOf,
+  NakedAction,
+  PayloadsOf,
+  ScopeOf,
+} from './types';
 import { typedKeys } from './utils';
 
 type PayloadsUnion<PS1, PS2> = PS1 & PS2 & Record<keyof PS1 & keyof PS2, never>;
@@ -12,38 +20,32 @@ export type ActionsUnion<
    * @deprecated create is not allowed in actions union
    */
   create: never;
-} & DefinedActions<
-  A1['ȋnternal']['$scope'] | A2['ȋnternal']['$scope'],
-  PayloadsUnion<A1['ȋnternal']['$payloads'], A2['ȋnternal']['$payloads']>
->;
+} & DefinedActions<ScopeOf<A1> | ScopeOf<A2>, PayloadsUnion<PayloadsOf<A1>, PayloadsOf<A2>>>;
 
 function actionsUnionPair<A1 extends DefinedActions<any, any>, A2 extends DefinedActions<any, any>>(
   actions1: A1,
   actions2: A2,
 ): ActionsUnion<A1, A2> {
-  type S1 = A1['ȋnternal']['$scope'];
-  type S2 = A2['ȋnternal']['$scope'];
-  type S = S1 | S2;
+  type ReturnType = ActionsUnion<A1, A2>;
 
-  type PS1 = A1['ȋnternal']['$payloads'];
-  type PS2 = A2['ȋnternal']['$payloads'];
-  type PS = ActionsUnion<A1, A2>['ȋnternal']['$payloads'];
+  type S = ScopeOf<ReturnType>;
+  type PS = PayloadsOf<ReturnType>;
 
-  type MT1 = keyof PS1;
-  type MT2 = keyof PS2;
-  type MT = Exclude<MT1 | MT2, MT1 & MT2>;
+  type K1 = KeysOf<A1>;
+  type K2 = KeysOf<A2>;
+  type K = Exclude<K1 | K2, K1 & K2>;
 
   const keys = [...typedKeys(actions1.is), ...typedKeys(actions2.is)].filter(
     key => !(key in actions1.is && key in actions2.is),
-  ) as MT[];
+  ) as K[];
 
-  const is = {} as ActionsUnion<A1, A2>['is'];
+  const is = {} as ReturnType['is'];
   const itIsNot = (action: NakedAction) => false;
-  keys.forEach(mainType => {
-    const isInActions1 = mainType in actions1.is ? actions1.is[mainType as MT1] : itIsNot;
-    const isInActions2 = mainType in actions2.is ? actions2.is[mainType as MT2] : itIsNot;
+  keys.forEach(key => {
+    const isInActions1 = key in actions1.is ? actions1.is[key as K1] : itIsNot;
+    const isInActions2 = key in actions2.is ? actions2.is[key as K2] : itIsNot;
     const predicate = (action: NakedAction) => isInActions1(action) || isInActions2(action);
-    is[mainType] = predicate as ActionPredicate<S, MT, PS>;
+    is[key] = predicate as ActionPredicate<S, K, PS>;
   });
 
   return {

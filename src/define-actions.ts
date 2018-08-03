@@ -12,26 +12,25 @@ import { typedKeys } from './utils';
 
 export function defineActions<S extends string, PS>(scope: S, payloads: PS): DefinedActions<S, PS> {
   const types = {} as ActionTypes<S, PS>;
-  typedKeys(payloads).forEach(mainType => {
-    types[mainType] = scopeString(mainType, scope);
+  typedKeys(payloads).forEach(key => {
+    types[key] = scopeString(key, scope);
   });
 
   const create = {} as ActionFactories<S, PS>;
-  typedKeys(payloads).forEach(mainType => {
-    type MT = typeof mainType;
-    type PayloadedFactory = <P extends PS[MT]>(payload: P) => ScopedAction<P, MT, S>;
+  typedKeys(payloads).forEach(key => {
+    type K = typeof key;
+    type PayloadedFactory = <P extends PS[K]>(payload: P) => ScopedAction<P, K, S>;
     const factory: PayloadedFactory = payload => ({
-      type: types[mainType],
+      type: types[key],
       payload,
     });
-    create[mainType] = factory as ActionFactory<S, MT, PS>;
+    create[key] = factory as ActionFactory<S, K, PS>;
   });
 
   const is = {} as ActionPredicates<S, PS>;
-  typedKeys(payloads).forEach(mainType => {
-    type MT = typeof mainType;
-    is[mainType] = (action): action is ScopedAction<PS[MT], MT, S> =>
-      action.type === types[mainType];
+  typedKeys(payloads).forEach(key => {
+    type K = typeof key;
+    is[key] = (action): action is ScopedAction<PS[K], K, S> => action.type === types[key];
   });
 
   return {
