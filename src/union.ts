@@ -126,6 +126,53 @@ export interface ActionsUnionFunction {
     actions6: A6,
   ): ActionsUnion<ActionsUnion<ActionsUnion<ActionsUnion<ActionsUnion<A1, A2>, A3>, A4>, A5>, A6>;
 
+  <
+    A1 extends DefinedActions<any, any>,
+    A2 extends DefinedActions<any, any>,
+    A3 extends DefinedActions<any, any>,
+    A4 extends DefinedActions<any, any>,
+    A5 extends DefinedActions<any, any>,
+    A6 extends DefinedActions<any, any>,
+    A7 extends DefinedActions<any, any>
+  >(
+    actions1: A1,
+    actions2: A2,
+    actions3: A3,
+    actions4: A4,
+    actions5: A5,
+    actions6: A6,
+    actions7: A7,
+  ): ActionsUnion<
+    ActionsUnion<ActionsUnion<ActionsUnion<ActionsUnion<ActionsUnion<A1, A2>, A3>, A4>, A5>, A6>,
+    A7
+  >;
+
+  <
+    A1 extends DefinedActions<any, any>,
+    A2 extends DefinedActions<any, any>,
+    A3 extends DefinedActions<any, any>,
+    A4 extends DefinedActions<any, any>,
+    A5 extends DefinedActions<any, any>,
+    A6 extends DefinedActions<any, any>,
+    A7 extends DefinedActions<any, any>,
+    A8 extends DefinedActions<any, any>
+  >(
+    actions1: A1,
+    actions2: A2,
+    actions3: A3,
+    actions4: A4,
+    actions5: A5,
+    actions6: A6,
+    actions7: A7,
+    actions8: A8,
+  ): ActionsUnion<
+    ActionsUnion<
+      ActionsUnion<ActionsUnion<ActionsUnion<ActionsUnion<ActionsUnion<A1, A2>, A3>, A4>, A5>, A6>,
+      A7
+    >,
+    A8
+  >;
+
   (...actionsList: DefinedActions<any, any>[]): DefinedActions<any, any>;
 }
 
