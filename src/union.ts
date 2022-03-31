@@ -1,5 +1,6 @@
 import { buildCreateReducer } from './create-reducer';
 import {
+  ActionFactories,
   ActionFactory,
   ActionPredicate,
   DefinedActions,
@@ -39,19 +40,19 @@ function actionsUnionPair<A1 extends DefinedActions<any, any>, A2 extends Define
   const is = {} as ReturnType['is'];
   const itIsNot = (action: NakedAction) => false;
   keys.forEach(key => {
-    const isInActions1 = key in actions1.is ? actions1.is[key as K1] : itIsNot;
-    const isInActions2 = key in actions2.is ? actions2.is[key as K2] : itIsNot;
+    const isInActions1 = (key as K1) in actions1.is ? actions1.is[key as K1] : itIsNot;
+    const isInActions2 = (key as K2) in actions2.is ? actions2.is[key as K2] : itIsNot;
     const predicate = (action: NakedAction) => isInActions1(action) || isInActions2(action);
     is[key] = predicate as ActionPredicate<S, K, PS>;
   });
 
   const create = {} as ReturnType['create'];
   keys.forEach(key => {
-    if (key in actions1.create) {
-      create[key] = actions1.create[key] as ActionFactory<S, K, PS>;
+    if ((key as K1) in actions1.create) {
+      (create as ActionFactories<S, PS>)[key] = actions1.create[key] as ActionFactory<S, K, PS>;
     }
-    if (key in actions2.create) {
-      create[key] = actions2.create[key] as ActionFactory<S, K, PS>;
+    if ((key as K2) in actions2.create) {
+      (create as ActionFactories<S, PS>)[key] = actions2.create[key] as ActionFactory<S, K, PS>;
     }
   });
 

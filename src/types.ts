@@ -41,12 +41,14 @@ export type ActionTypes<S extends string, PS> = { [K in keyof PS]: ScopedString<
 
 type ȊnternalActionsMap<S extends string, PS> = { [K in keyof PS]: ScopedAction<PS[K], K, S> };
 
-type ȊnternalAction<S extends string, PS> = ȊnternalActionsMap<S, PS>[keyof ȊnternalActionsMap<
-  S,
-  PS
+type ȊnternalAction<S extends string, PS> = ȊnternalActionsMap<S, PS>[Extract<
+  keyof ȊnternalActionsMap<S, PS>,
+  string
 >];
 
-export interface DefinedActions<S extends string, PS> {
+type Payloads<K extends string> = Record<K, any>;
+
+export interface DefinedActions<S extends string, PS extends Payloads<any>> {
   create: ActionFactories<S, PS>;
   is: ActionPredicates<S, PS>;
   createReducer: CreateReducer<S, PS>;
